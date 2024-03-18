@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='autossh',
-    version='0.0.1.9',
+    version='0.0.1.0',
     license='MIT',
     author='Gavin Bao',
     author_email='xingce.bao@gmail.com',
