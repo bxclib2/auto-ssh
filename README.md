@@ -1,4 +1,4 @@
-# auto-ssh
+# autossh
 
 Usage:
 
