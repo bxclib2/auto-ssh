@@ -49,3 +49,11 @@ Or with cli:
 ```shell
 autossh-py your_username@ssh.example.com -L 5000:remote.example.com:3306 -p 2222
 ```
+
+If you want to use in backend, you can specify password with sshpass and use nohup &:
+
+Install sshpass as per: https://gist.github.com/arunoda/7790979 and:
+
+```shell
+nohup sshpass -p your_password autossh-py -p 2222 -L 5000:remote.example.com:3306 your_username@ssh.example.com &
+```
