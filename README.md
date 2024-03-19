@@ -43,3 +43,9 @@ try:
 finally:
     tunnel.stop()
 ```
+
+Or with cli:
+
+```shell
+autossh-py user@ssh.example.com -L 5000:remote.example.com:3306 -p 2222
+```
