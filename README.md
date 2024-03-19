@@ -3,6 +3,8 @@
 Usage:
 
 ```python
+from autossh import AutoSSHTunnel  
+
 with AutoSSHTunnel(
     ssh_server='ssh.example.com', 
     ssh_username='your_username', 
@@ -20,6 +22,8 @@ with AutoSSHTunnel(
 Or: 
 
 ```python
+from autossh import AutoSSHTunnel  
+
 tunnel = AutoSSHTunnel(
     ssh_server='ssh.example.com', 
     ssh_username='your_username', 
