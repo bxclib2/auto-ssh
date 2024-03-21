@@ -57,3 +57,9 @@ Install sshpass as per: https://gist.github.com/arunoda/7790979 and:
 ```shell
 nohup sshpass -p your_password autossh-py -p 2222 -L 5000:remote.example.com:3306 your_username@ssh.example.com &
 ```
+
+Also support ssh key:
+
+```shell
+autossh-py -i ~/your_key -L 3306:localhost:3306 your_username@ssh.example.com
+```
