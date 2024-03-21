@@ -1,9 +1,10 @@
 # autossh_py.py
 import argparse
-from autossh import AutoSSHTunnel  
+from autossh import AutoSSHTunnel
 import getpass
 import sys
 import time
+
 
 def main():
     parser = argparse.ArgumentParser(description='Set up an SSH tunnel, similar to SSH')
@@ -11,15 +12,16 @@ def main():
     parser.add_argument('-l', '--login', help='Login name (overrides user in destination)')
     parser.add_argument('-L', required=True, help='Port forwarding in the format local_port:remote_host:remote_port')
     parser.add_argument('-p', '--port', type=int, help='SSH port on the remote host (default is 22)', default=22)
+    parser.add_argument('-i', '--identity_file', help='Path to SSH private key file (if not using password)')
 
     args = parser.parse_args()
 
     if '@' in args.destination:
-        destination_parts = args.destination.rsplit('@', 1) 
+        destination_parts = args.destination.rsplit('@', 1)
         ssh_username, ssh_server = destination_parts
     else:
         ssh_server = args.destination
-        ssh_username = getpass.getuser()  
+        ssh_username = getpass.getuser()
 
     if args.login:
         ssh_username = args.login
@@ -31,7 +33,9 @@ def main():
         print("Error: Invalid port forwarding format. Expected local_port:remote_host:remote_port.")
         sys.exit(1)
 
-    ssh_password = getpass.getpass(f"SSH Password for {ssh_username}@{ssh_server}: ")
+    ssh_password = None
+    if not args.identity_file:
+        ssh_password = getpass.getpass(f"SSH Password for {ssh_username}@{ssh_server}: ")
 
     tunnel = AutoSSHTunnel(
         ssh_server=ssh_server,
@@ -40,12 +44,14 @@ def main():
         remote_host=remote_host,
         remote_port=remote_port,
         local_port=local_port,
-        ssh_port=args.port
+        ssh_port=args.port,
+        ssh_private_key_path=args.identity_file
     )
 
     try:
         with tunnel:
-            print(f"SSH tunnel established. Forwarding from localhost:{local_port} to {remote_host}:{remote_port}. Press Ctrl+C to exit.")
+            print(
+                f"SSH tunnel established. Forwarding from localhost:{local_port} to {remote_host}:{remote_port}. Press Ctrl+C to exit.")
             while True:
                 time.sleep(1)
                 pass
@@ -53,6 +59,7 @@ def main():
         print("Closing SSH tunnel...")
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     main()

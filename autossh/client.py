@@ -3,10 +3,12 @@ import time
 from sshtunnel import SSHTunnelForwarder
 
 class AutoSSHTunnel:
-    def __init__(self, ssh_server, ssh_username, ssh_password, remote_host, remote_port, local_port, ssh_port=22):
+    def __init__(self, ssh_server, ssh_username, remote_host, remote_port, local_port, ssh_private_key_path=None,
+                 ssh_password=None, ssh_port=22):
         self.ssh_server = ssh_server
         self.ssh_username = ssh_username
         self.ssh_password = ssh_password
+        self.ssh_private_key_path = ssh_private_key_path
         self.remote_host = remote_host
         self.remote_port = remote_port
         self.local_port = local_port
@@ -42,7 +44,7 @@ class AutoSSHTunnel:
                     (self.ssh_server, self.ssh_port),
                     ssh_username=self.ssh_username,
                     ssh_password=self.ssh_password,
-                    remote_bind_address=(self.remote_host, self.remote_port),
+                    ssh_pkey=self.ssh_private_key_path,
                     local_bind_address=('', self.local_port)
                 )
                 self.tunnel.start()
