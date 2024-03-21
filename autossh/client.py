@@ -45,6 +45,7 @@ class AutoSSHTunnel:
                     ssh_username=self.ssh_username,
                     ssh_password=self.ssh_password,
                     ssh_pkey=self.ssh_private_key_path,
+                    remote_bind_address=(self.remote_host, self.remote_port),
                     local_bind_address=('', self.local_port)
                 )
                 self.tunnel.start()
